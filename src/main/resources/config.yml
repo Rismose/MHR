@@ -1,0 +1,10 @@
+assassins-insta-kill-speedrunner: false
+compass-tracking: true
+compass-give: true
+compass-particle: true
+compass-particle-in-nether: true
+compass-random-different-worlds: true
+freeze-assassin-when-seen: false
+# ! DO NOT CHANGE !
+version: ${project.version}
+#

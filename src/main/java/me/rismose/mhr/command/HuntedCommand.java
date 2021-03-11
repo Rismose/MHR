@@ -1,0 +1,60 @@
+package me.rismose.mhr.command;
+
+import me.rismose.mhr.PlayerData;
+import me.rismose.mhr.TeamManager;
+import me.rismose.mhr.model.ManHuntRole;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+public class HuntedCommand implements CommandExecutor {
+
+    private final Plugin plugin;
+    private final TeamManager teamManager;
+    private final PlayerData playerData;
+
+    public HuntedCommand(Plugin plugin, TeamManager teamManager, PlayerData playerData) {
+        this.plugin = plugin;
+        this.teamManager = teamManager;
+        this.playerData = playerData;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (args.length == 0) return false;
+
+        Player player = plugin.getServer().getPlayer(args[0]);
+        if (player == null) {
+            sender.sendMessage("Could not find player " + args[0]);
+            return true;
+        }
+
+        if (args.length == 1) {
+            addHunted(plugin.getServer().getPlayer(args[0]));
+            sender.sendMessage(ChatColor.GREEN + "Added player " + player.getName() + " to hunted group");
+            return true;
+        } else if (args.length == 2 && args[1].equals("remove")) {
+            removeHunted(player);
+            sender.sendMessage(ChatColor.GREEN + "Removed player " + player.getName() + " from hunted group");
+            return true;
+        }
+
+        return false;
+    }
+
+    private void addHunted(Player player) {
+        playerData.setRole(player, ManHuntRole.HUNTED);
+        teamManager.addPlayer(ManHuntRole.HUNTED, player);
+    }
+
+    private void removeHunted(Player player) {
+        playerData.reset(player);
+        teamManager.removePlayer(ManHuntRole.HUNTED, player);
+
+    }
+
+}

@@ -1,0 +1,25 @@
+name: MHR
+version: ${project.version}
+main: me.rismose.mhr.MHR
+api-version: 1.16
+authors: [ Rismose ]
+description: Assasin/Manhunt
+website: rismose.xyz
+commands:
+  assassin:
+    description: Sets a player as an assasin
+    usage: <command> <player> [remove]
+    aliases:
+      - hunter
+      - killer
+  hunted:
+    description: Sets a player to be hunted
+    usage: <command> <player> [remove]
+    aliases:
+      - speedrunner
+      - runner
+  manhunt:
+    description: Show current teams
+    usage: <command>
+    aliases:
+      - teams
